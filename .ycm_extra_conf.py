@@ -7,19 +7,15 @@ import re
 
 BASE_FLAGS = [
         '-Wall',
-        '-Wextra',
         '-Werror',
         '-Wno-long-long',
         '-Wno-variadic-macros',
         '-fexceptions',
         '-ferror-limit=10000',
-        '-DNDEBUG',
-        '-std=c++11',
-        '-xc++',
         '-I/usr/lib/',
         '-I/usr/include/',
         '-Iinclude',
-        '-Ilibuv-1.27.0/include',
+        '-Ilibuv/include',
         '-Ihttp-parser'
         ]
 
@@ -35,7 +31,8 @@ SOURCE_EXTENSIONS = [
 SOURCE_DIRECTORIES = [
         'src',
         'lib',
-        'libuv-1.27.0/src'
+        'libuv/src',
+        'http-parser'
         ]
 
 HEADER_EXTENSIONS = [
@@ -47,7 +44,8 @@ HEADER_EXTENSIONS = [
 
 HEADER_DIRECTORIES = [
         'include',
-        'libuv-1.27.0/include'
+        'libuv/include',
+        'http-parser'
         ]
 
 def IsHeaderFile(filename):
