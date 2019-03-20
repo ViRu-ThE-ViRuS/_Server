@@ -1,11 +1,12 @@
-INC_DIR=-Iinclude -Ilibuv-1.27.0/include -Ihttp-parser
+INC_DIR=-Iinclude -Ilibuv/include -Ihttp-parser
 SRC_DIR=src
 OBJ_DIR=obj
 LIB_DIR=lib
 _INC_DIR=include
 
-LIBS=-luv
-LDPATH=-Llibuv-1.27.0/build/Release -L$(LIB_DIR)
+LIBS=-luv_a
+_LIBS=libuv/out/cmake/libuv_a.a
+LDPATH=-Llibuv/out/cmake -L$(LIB_DIR)
 
 SRC_FILES=$(wildcard $(SRC_DIR)/*.c)
 HEADER_FILES=$(wildcard $(_INC_DIR)/*.h)
@@ -16,7 +17,7 @@ DEPS=$(HEADER_FILES) http-parser/http_parser.o
 CC=gcc
 CFLAGS=$(INC_DIR) -Wall -Wno-unused-command-line-argument $(LDPATH) $(LIBS) $(MAC_SHIT)
 
-main: $(OBJ_FILES)
+main: $(OBJ_FILES) $(_LIBS)
 	$(CC) -o $@ $^ $(CFLAGS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(DEPS)
@@ -24,6 +25,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(DEPS)
 
 http-parser/http_parser.o:
 	$(MAKE) -C http-parser http_parser.o
+
+libuv/out/cmake/libuv_a.a:
+	cd libuv; mkdir -p out/cmake; cd out/cmake; cmake -DBUILD_TESTING=ON ../..; make all
 
 .PHONY: clean
 clean:
