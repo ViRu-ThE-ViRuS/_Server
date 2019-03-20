@@ -19,7 +19,8 @@ BASE_FLAGS = [
         '-I/usr/lib/',
         '-I/usr/include/',
         '-Iinclude',
-        '-Ilibuv-1.27.0/include'
+        '-Ilibuv-1.27.0/include',
+        '-Ihttp-parser'
         ]
 
 SOURCE_EXTENSIONS = [

@@ -1,4 +1,4 @@
-INC_DIR=-Iinclude -Ilibuv-1.27.0/include
+INC_DIR=-Iinclude -Ilibuv-1.27.0/include -Ihttp-parser
 SRC_DIR=src
 OBJ_DIR=obj
 LIB_DIR=lib
@@ -11,7 +11,7 @@ SRC_FILES=$(wildcard $(SRC_DIR)/*.c)
 HEADER_FILES=$(wildcard $(_INC_DIR)/*.h)
 OBJ_FILES=$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
-DEPS=$(HEADER_FILES)
+DEPS=$(HEADER_FILES) http-parser/http_parser.o
 
 CC=gcc
 CFLAGS=$(INC_DIR) -Wall -Wno-unused-command-line-argument $(LDPATH) $(LIBS) $(MAC_SHIT)
@@ -21,6 +21,9 @@ main: $(OBJ_FILES)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
+
+http_parser/http_parser.o:
+	$(MAKE) -C http-parser http_parser.o
 
 .PHONY: clean
 clean:

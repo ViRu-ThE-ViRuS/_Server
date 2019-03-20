@@ -1,3 +1,4 @@
+#include <http_parser.h>
 #include <server.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,7 +8,7 @@
 #define DEFAULT_BACKLOG 128
 
 void alloc_buffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf) {
-    buf->base = malloc(suggested_size);
+    buf->base = (char *)malloc(suggested_size);
     buf->len = suggested_size;
 }
 
@@ -18,7 +19,7 @@ void on_client_read(uv_stream_t *stream, ssize_t nread, const uv_buf_t *buf) {
 void on_new_connection(uv_stream_t *server, int status) {
     printf("on_new_connection\n");
 
-    uv_tcp_t *client = malloc(sizeof(uv_tcp_t));
+    uv_tcp_t *client = (uv_tcp_t *)malloc(sizeof(uv_tcp_t));
     uv_tcp_init(uv_default_loop(), client);
     int r = uv_accept(server, (uv_stream_t *)client);
 
