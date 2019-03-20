@@ -22,7 +22,7 @@ main: $(OBJ_FILES)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-http_parser/http_parser.o:
+http-parser/http_parser.o:
 	$(MAKE) -C http-parser http_parser.o
 
 .PHONY: clean
