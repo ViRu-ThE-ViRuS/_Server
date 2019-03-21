@@ -4,8 +4,8 @@ OBJ_DIR=obj
 LIB_DIR=lib
 _INC_DIR=include
 
-LIBS=-luv_a
-_LIBS=libuv/out/cmake/libuv_a.a
+LIBS=-luv
+_LIBS=libuv/out/cmake/libuv.so
 LDPATH=-Llibuv/out/cmake -L$(LIB_DIR)
 
 SRC_FILES=$(wildcard $(SRC_DIR)/*.c)
@@ -28,10 +28,11 @@ http-parser/http_parser.o:
 
 libuv/out/cmake/libuv_a.a:
 	cd libuv; mkdir -p out/cmake; cd out/cmake; cmake -DBUILD_TESTING=ON ../..; make all
+	cd libuv/out/cmake; ./uv_run_tests ; ./uv_run_tests_a
 
 .PHONY: clean
 clean:
-	rm -rf $(OBJ_DIR)/*.o *~ core $(INC_DIR)/*~
+	rm -rf $(OBJ_DIR)/*.o 
 	rm -rf main
 
 echo_paths:
